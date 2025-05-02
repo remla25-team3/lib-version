@@ -1,16 +1,4 @@
-import os
+from .version_util import VersionUtil
 
 def get_version():
-    """
-    Reads and returns the version string from the VERSION file.
-    
-    Returns:
-        str: The semantic version (e.g., '1.0.0') read from the VERSION file.
-    """
-
-    # Construct the relative path to the VERSION file
-    current_dir = os.path.dirname(__file__)
-    version_path = os.path.join(current_dir, '..', 'VERSION')
-    #Open the file, read its contents (remove whitespace)
-    with open(version_path) as f:
-        return f.read().strip()
+    return VersionUtil.get_version()

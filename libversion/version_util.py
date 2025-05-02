@@ -8,7 +8,7 @@ class VersionUtil:
         Reads and returns the version string from the VERSION file.
         
         Returns:
-            str: The semantic version (e.g., '1.0.0') read from the VERSION file.
+            str: The version (e.g., a1) read from the VERSION file.
         """
 
         # Construct the relative path to the VERSION file
