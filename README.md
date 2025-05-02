@@ -27,7 +27,7 @@ example, for verbose system information in log messages or data record.
 
 In another repository (e.g., `model-service`), add this to `requirements.txt`:
 
-    git+https://github.com/remla25-team3/lib-version/tree/v1.0.0
+    git+https://github.com/remla25-team3/lib-version.git
 
 Then use it in your code (Python):
 
