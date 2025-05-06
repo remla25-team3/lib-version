@@ -13,12 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Parse version info from tag
-        run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
-          echo "Parsed version: $VERSION"
-          echo "version=$VERSION" >> $GITHUB_ENV
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -27,14 +21,11 @@ jobs:
       - name: Install build tool
         run: pip install build
 
-      - name: Set version in VERSION file
-        run: echo "${{ env.version }}" > VERSION
-
       - name: Build the Python package
         run: python -m build
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
         with:
-          name: libversion-${{ env.version }}
+          name: libversion-${{ github.ref_name }}
           path: dist/
