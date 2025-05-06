@@ -8,7 +8,7 @@ class VersionUtil:
     @staticmethod
     def get_version():
         """
-        Retrieves the version of the library.
+        Retrieves the version of the library. 
         
         Tries to fetch from package metadata (which would include Git tag version).
 
@@ -20,4 +20,4 @@ class VersionUtil:
             return version("libversion")
         except PackageNotFoundError:
             # Fallback to the default version
-            return "unknown"
+            return "Unknown"
