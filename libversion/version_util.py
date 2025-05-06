@@ -1,19 +1,21 @@
-import os
+from importlib.metadata import version, PackageNotFoundError
 
 class VersionUtil:
+    """
+    A utility class to retrieve the version of the library.
+    """
 
     @staticmethod
     def get_version():
         """
-        Reads and returns the version string from the VERSION file.
-        
-        Returns:
-            str: The version (e.g., a1) read from the VERSION file.
-        """
+        Retrieves the version of the library from package metadata.
 
-        # Construct the relative path to the VERSION file
-        current_dir = os.path.dirname(__file__)
-        version_path = os.path.join(current_dir, '..', 'VERSION')
-        #Open the file, read its contents (remove whitespace)
-        with open(version_path, 'r') as f:
-            return f.read().strip()
+        Returns:
+            str: The version of the library.
+        """
+        try:
+            # Dynamically fetch the version from package metadata
+            return version("libversion")
+        except PackageNotFoundError:
+            # Fallback if the package metadata is not found
+            return "unknown"
