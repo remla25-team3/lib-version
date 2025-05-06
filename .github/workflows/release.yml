@@ -1,40 +1,28 @@
-name: Release lib-version
-
 on:
-  push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+' # Only run this workflow when a tag like 1.2.3 is pushed
-
+    push:
+      branches:
+        - main
+  
+permissions:
+    contents: write
+    pull-requests: write
+    id-token: write
+  
+name: release-please
+  
 jobs:
-  release:
-    runs-on: ubuntu-24.04
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Parse version info from tag
-        run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
-          echo "Parsed version: $VERSION"
-          echo "version=$VERSION" >> $GITHUB_ENV
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-
-      - name: Install build tool
-        run: pip install build
-
-      - name: Set version in VERSION file
-        run: echo "${{ env.version }}" > VERSION
-
-      - name: Build the Python package
-        run: python -m build
-
-      - name: Upload package artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: libversion-${{ env.version }}
-          path: dist/
+    release-please:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/create-github-app-token@v2
+          id: app-token
+          with:
+            app-id: ${{ vars.TEAM_APP_ID }}
+            private-key: ${{ secrets.TEAM_APP_KEY }}
+  
+        - uses: googleapis/release-please-action@v4
+          with:
+            token: ${{ steps.app-token.outputs.token }}
+            config-file: release-please-config.json
+            manifest-file: .release-please-manifest.json
+  
