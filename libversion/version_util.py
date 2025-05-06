@@ -20,4 +20,4 @@ class VersionUtil:
             return version("libversion")
         except PackageNotFoundError:
             # Fallback to the default version
-            return "Unknown"
+            return "unknown"
